@@ -21,7 +21,7 @@ type PlayerEvent = {
 	AfterJoin: (id: number) => void;
 	AfterUnjoin: (id: number, reason: string) => void;
 }
-const playerObserver = new ObserverGroup<PlayerEvent>();
+const playerObserver = new EventDispatcher<PlayerEvent>();
 playerObserver.addEventListener("AfterJoin", id => {/* ... */}); // Adding listener on "AfterJoin" event
 playerObserver.addEventListener("AfterUnjoin", (id, reason) => {/* ... */}); // Adding listener on "AfterUnjoin" event
 playerObserver.notify("AfterJoin", 12); // Firing all listeners subscribed on "AfterJoin" event
