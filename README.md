@@ -18,8 +18,8 @@ productObserver.notify(12, "Title"); // Notifying and passing parameters to all 
 For `EventDispatcher` class:
 ```ts
 type PlayerEvent = {
-	AfterJoin: (id: number) => void;
-	AfterUnjoin: (id: number, reason: string) => void;
+	AfterJoin(id: number): void;
+	AfterUnjoin(id: number, reason: string): void;
 }
 const playerObserver = new EventDispatcher<PlayerEvent>();
 playerObserver.addEventListener("AfterJoin", id => {/* ... */}); // Adding listener on "AfterJoin" event
