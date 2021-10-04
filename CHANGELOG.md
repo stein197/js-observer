@@ -1,4 +1,7 @@
 # CHANGELOG
 
+## [Unreleased]
+- Add an ability to return values from listeners to affect the flow of code
+
 ## [1.0.0](../../tree/1.0.0) - 2021-10-03
 Release
