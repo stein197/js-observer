@@ -3,9 +3,8 @@
 		"outDir": "out",
 		"target": "ESNext",
 		"strict": true,
-		"strictNullChecks": true,
-		"baseUrl": "src",
-		"rootDir": "src",
+		"strictNullChecks": false,
+		"allowSyntheticDefaultImports": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"allowUnusedLabels": false,
@@ -13,6 +12,6 @@
 		"resolveJsonModule": true
 	},
 	"include": [
-		"src"
+		"**/*.ts"
 	]
 }
