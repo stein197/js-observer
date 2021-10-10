@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "Library that provides an ability to use observer pattern",
   "main": "index.js",
-  "types": "types",
+  "types": "index.d.ts",
   "scripts": {
     "clean": "clean",
     "prebuild": "clean",
     "build": "tsc",
-    "prebuild:dev": "clean",
-    "build:dev": "tsc --allowUnusedLabels true --noUnusedLocals false --noUnusedParameters false",
-    "pretest": "npm run build:dev",
+    "pretest": "npm run build",
     "test": "mocha test.js"
   },
   "repository": {

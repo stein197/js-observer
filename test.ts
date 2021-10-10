@@ -1,5 +1,5 @@
-import should from "should";
-import mocha from "mocha";
+import * as should from "should";
+import * as mocha from "mocha";
 import {Observer, EventDispatcher} from ".";
 
 mocha.describe("Observer<T>", () => {
