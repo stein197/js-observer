@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- Add an ability to pass `this` down to listeners
 - Add an ability to return values from listeners to affect the flow of code
 - Make key for `EventDispatcher<T>` accept enum types
 
