@@ -9,7 +9,8 @@
     "prebuild": "clean",
     "build": "tsc",
     "pretest": "npm run build",
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+	"bundle": "npx tsc && npx rollup --config && npx mocha test.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/mocha": "^9.0.0",
     "mocha": "^9.1.2",
+    "rollup": "^2.58.0",
     "should": "^13.2.3",
     "typescript": "^4.4.3"
   }

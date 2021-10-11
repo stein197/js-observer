@@ -1,9 +1,11 @@
 {
 	"compilerOptions": {
+		"outDir": "out",
 		"target": "ESNext",
 		"strict": true,
-		"module": "CommonJS",
+		"module": "ESNext",
 		"declaration": true,
+		"declarationDir": "types",
 		"allowSyntheticDefaultImports": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
@@ -13,5 +15,8 @@
 	},
 	"include": [
 		"*.ts"
+	],
+	"exclude": [
+		"out"
 	]
 }
