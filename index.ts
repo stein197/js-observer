@@ -110,12 +110,12 @@ export interface EventEmitter<T extends {[K: string]: (...data: any[]) => void}>
 	 * @param key Event name to subscribe on.
 	 * @param listener Listener.
 	 */
-	addEventListener<K extends keyof T>(key: K, listener: T): void;
+	addEventListener<K extends keyof T>(key: K, listener: T[K]): void;
 
 	/**
 	 * Remove previously subscribed listener from specific event.
 	 * @param key Event name to cancel subscribe.
 	 * @param listener Listener to remove.
 	 */
-	removeEventListener<K extends keyof T>(key: K, listener: T): void;
+	removeEventListener<K extends keyof T>(key: K, listener: T[K]): void;
 }
