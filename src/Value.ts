@@ -1,9 +1,11 @@
 import {EventDispatcher} from "./EventDispatcher";
 import {EventEmitter} from "./EventEmitter";
+import {ValueEventMap} from "./ValueEventMap";
+import {Nullable} from "./Nullable";
 
-export class Value<T> implements EventEmitter<ValueEvent<T>> {
+export class Value<T> implements EventEmitter<ValueEventMap<T>> {
 
-	private readonly dispatcher = new EventDispatcher<ValueEvent<T>>();
+	private readonly dispatcher = new EventDispatcher<ValueEventMap<T>>();
 
 	public get value(): Nullable<T> {
 		return this.__value;
@@ -24,18 +26,11 @@ export class Value<T> implements EventEmitter<ValueEvent<T>> {
 
 	public constructor(private __value?: Nullable<T>, private readonly validate?: (value?: Nullable<T>) => void) {}
 
-	public addEventListener<K extends keyof ValueEvent<T>>(key: K, listener: ValueEvent<T>[K]): void {
+	public addEventListener<K extends keyof ValueEventMap<T>>(key: K, listener: ValueEventMap<T>[K]): void {
 		this.dispatcher.addEventListener(key, listener);
 	}
 
-	public removeEventListener<K extends keyof ValueEvent<T>>(key: K, listener: ValueEvent<T>[K]): void {
+	public removeEventListener<K extends keyof ValueEventMap<T>>(key: K, listener: ValueEventMap<T>[K]): void {
 		this.dispatcher.removeEventListener(key, listener);
 	}
 }
-
-type ValueEvent<T> = {
-	Change(value?: Nullable<T>): void;
-	Error(error: any, value?: Nullable<T>): void;
-}
-
-type Nullable<T> = T | null | undefined;
