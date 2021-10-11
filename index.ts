@@ -19,7 +19,7 @@ export class Observer<T extends (...data: any[]) => void = () => void> {
 	 * @param listener Listener.
 	 */
 	public addListener(listener: T): void {
-		if (!this.has(listener))
+		if (this.listeners.indexOf(listener) < 0)
 			this.listeners.push(listener);
 	}
 
@@ -39,10 +39,6 @@ export class Observer<T extends (...data: any[]) => void = () => void> {
 	 */
 	public notify(...data: Parameters<T>): void {
 		this.listeners.slice().forEach(callback => callback(...data));
-	}
-
-	private has(listener: T): boolean {
-		return this.listeners.indexOf(listener) >= 0;
 	}
 }
 
