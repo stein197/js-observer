@@ -1,3 +1,4 @@
+import {EventEmitter} from "./EventEmitter";
 import {Observer} from "./Observer";
 
 /**
@@ -18,27 +19,17 @@ import {Observer} from "./Observer";
  * playerObserver.notify("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
  * ```
  */
-export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> {
+export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> implements EventEmitter<T> {
 
 	/** Holds all subscribed listeners grouped by event name */
 	private readonly observers: {[K in keyof T]?: Observer<T[K]>} = {};
 
-	/**
-	 * Add a listener to specific event.
-	 * @param key Event name to subscribe on.
-	 * @param listener Listener.
-	 */
 	public addEventListener<K extends keyof T>(key: K, listener: T[K]): void {
 		if (!this.observers[key])
 			this.observers[key] = new Observer();
 		this.observers[key]!.addListener(listener);
 	}
 
-	/**
-	 * Remove previously subscribed listener from specific event.
-	 * @param key Event name to cancel subscribe.
-	 * @param listener Listener to remove.
-	 */
 	public removeEventListener<K extends keyof T>(key: K, listener: T[K]): void {
 		this.observers[key]?.removeListener(listener);
 	}
