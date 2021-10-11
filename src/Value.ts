@@ -1,6 +1,6 @@
 import {Nullable} from "./Nullable";
 import {Observable} from "./Observable";
-import { Observer } from "..";
+import {Observer} from "./Observer";
 
 export class Value<T> implements Observable<(value: Nullable<T>) => void> {
 
