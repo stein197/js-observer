@@ -1,11 +1,10 @@
-import {EventDispatcher} from "./EventDispatcher";
-import {EventEmitter} from "./EventEmitter";
-import {ValueEventMap} from "./ValueEventMap";
 import {Nullable} from "./Nullable";
+import {Observable} from "./Observable";
+import { Observer } from "..";
 
-export class Value<T> implements EventEmitter<ValueEventMap<T>> {
+export class Value<T> implements Observable<(value: Nullable<T>) => void> {
 
-	private readonly dispatcher = new EventDispatcher<ValueEventMap<T>>();
+	private readonly observer = new Observer<(value: Nullable<T>) => void>();
 
 	public get value(): Nullable<T> {
 		return this.__value;
@@ -14,23 +13,17 @@ export class Value<T> implements EventEmitter<ValueEventMap<T>> {
 	public set value(value: Nullable<T>) {
 		if (this.__value === value)
 			return;
-		try {
-			this.validate?.(value);
-		} catch (e) {
-			this.dispatcher.notify("Error", e, value);
-			return;
-		}
 		this.__value = value;
-		this.dispatcher.notify("Change", value);
+		this.observer.notify(value);
 	}
 
-	public constructor(private __value?: Nullable<T>, private readonly validate?: (value?: Nullable<T>) => void) {}
+	public constructor(private __value?: Nullable<T>) {}
 
-	public addEventListener<K extends keyof ValueEventMap<T>>(key: K, listener: ValueEventMap<T>[K]): void {
-		this.dispatcher.addEventListener(key, listener);
+	public addListener(listener: (value: Nullable<T>) => void): void {
+		this.observer.addListener(listener);
 	}
 
-	public removeEventListener<K extends keyof ValueEventMap<T>>(key: K, listener: ValueEventMap<T>[K]): void {
-		this.dispatcher.removeEventListener(key, listener);
+	public removeListener(listener: (value: Nullable<T>) => void): void {
+		this.observer.removeListener(listener);
 	}
 }
