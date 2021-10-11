@@ -18,7 +18,7 @@ import {Observer} from "./Observer";
  * playerObserver.notify("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
  * ```
  */
-export class EventDispatcher<T extends {[K: string]: (...data: any[]) => void}> {
+export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> {
 
 	/** Holds all subscribed listeners grouped by event name */
 	private readonly observers: {[K in keyof T]?: Observer<T[K]>} = {};
@@ -46,9 +46,9 @@ export class EventDispatcher<T extends {[K: string]: (...data: any[]) => void}> 
 	/**
 	 * Notify listeners subscribed on specific event.
 	 * @param key Event name which listeners will be called.
-	 * @param data Arguments to pass to the listeners.
+	 * @param args Arguments to pass to the listeners.
 	 */
-	public notify<K extends keyof T>(key: K, ...data: Parameters<T[K]>): void {
-		this.observers[key]?.notify(...data);
+	public notify<K extends keyof T>(key: K, ...args: Parameters<T[K]>): void {
+		this.observers[key]?.notify(...args);
 	}
 }

@@ -2,7 +2,7 @@
  * Interface that every class must implement if it emits an event.
  * @typeParam T - Callback type that an object accepts as listener.
  */
-export interface Observable<T extends (...data: any[]) => void> {
+export interface Observable<T extends (...args: any[]) => void> {
 
 	/**
 	 * Add a listener.

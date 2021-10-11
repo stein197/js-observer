@@ -11,7 +11,7 @@ import {Observable} from "./Observable";
  * productObserver.notify(12, "Title"); // Notifying and passing parameters to all subscribed listeners
  * ```
  */
-export class Observer<T extends (...data: any[]) => void = () => void> implements Observable<T> {
+export class Observer<T extends (...args: any[]) => void = () => void> implements Observable<T> {
 
 	/** Holds all subscribed listeners */
 	private readonly listeners: T[] = [];
@@ -29,9 +29,9 @@ export class Observer<T extends (...data: any[]) => void = () => void> implement
 
 	/**
 	 * Notify all subscribed listeners.
-	 * @param data Parameters being passed to subscribed listeners.
+	 * @param args Parameters being passed to subscribed listeners.
 	 */
-	public notify(...data: Parameters<T>): void {
-		this.listeners.slice().forEach(callback => callback(...data));
+	public notify(...args: Parameters<T>): void {
+		this.listeners.slice().forEach(callback => callback(...args));
 	}
 }

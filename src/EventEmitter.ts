@@ -2,7 +2,7 @@
  * Interface that every class must implement if it emits events.
  * @typeParam T - `<event name>: <event listener signature>` map that describes which events the class could emit.
  */
-export interface EventEmitter<T extends {[K: string]: (...data: any[]) => void}> {
+export interface EventEmitter<T extends {[K: string]: (...args: any[]) => void}> {
 
 	/**
 	 * Add a listener to specific event.
