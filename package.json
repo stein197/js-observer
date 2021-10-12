@@ -8,9 +8,10 @@
     "clean": "clean",
     "prebuild": "clean",
     "build": "tsc",
-    "pretest": "npm run build",
-    "test": "mocha test.js",
-	"bundle": "npx tsc && npx rollup --config && npx mocha test.js"
+	"prebundle": "npm run build",
+	"bundle": "rollup --config",
+    "pretest": "npm run bundle",
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
