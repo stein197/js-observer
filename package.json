@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Library that provides an ability to use observer pattern",
   "main": "index.js",
-  "types": "index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "clean": "clean",
     "build": "tsc",
