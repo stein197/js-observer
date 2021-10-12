@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "clean",
     "compile": "tsc",
-	"prebundle": "npm run compile",
-	"bundle": "rollup --config",
+    "prebundle": "npm run compile",
+    "bundle": "rollup --config",
     "pretest": "npm run bundle",
     "test": "mocha test.js"
   },
