@@ -8,7 +8,7 @@ npm i @stein197/observer
 ```
 
 ## Usage
-For `Observer` class:
+`Observer` class:
 ```ts
 const productObserver = new Observer<(id: number, name: string) => void>();
 productObserver.addListener((id, name) => {/* ... */}); // Adding a listener
@@ -16,7 +16,7 @@ productObserver.notify(12, "Title"); // Notifying and passing parameters to all 
 productObserver.notify(12, "Title", "Unused parameter"); // Compile-time error
 ```
 
-For `EventDispatcher` class:
+`EventDispatcher` class:
 ```ts
 type PlayerEvent = {
 	AfterJoin(id: number): void;
@@ -30,16 +30,24 @@ playerObserver.notify("AfterUnjoin", 12, "John"); // Firing all listeners subscr
 playerObserver.notify("AfterUnjoin", 12); // Compile-time error
 ```
 
-Every class that emits event must implement `EventEmitter` interface:
+Every class that emits event must implement `Observable` either `EventEmitter` interfaces for single or multiple events respectively:
 ```ts
 import {EventEmitter} from "@stein197/observer";
+import {Observable} from "@stein197/observer";
 
 class User implements EventEmitter<{AfterLeave(reason: string): void}> {
-	public addEventListener(...) {...}
-	public removeEventListener(...) {...}
+	public addEventListener(/* ... */) {/* ... */}
+	public removeEventListener(/* ... */) {/* ... */}
+}
+
+class Value implements Observable<(value: string) => void> {
+	public addListener(listener: (value: string) => void) {/* ... */}
+	public removeListener(listener: (value: string) => void) {/* ... */}
 }
 ```
 
 ## NPM scripts
+- `clean` cleans working directory from compiled files
+- `compile` compiles source code
+- `bundle` bundles compiled code into a single file
 - `test` runs unit tests
-- `build` compiles source code into js files
