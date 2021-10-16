@@ -6,6 +6,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "clean",
+	"precompile": "clean",
     "compile": "tsc",
     "prebundle": "npm run compile",
     "bundle": "rollup --config",
