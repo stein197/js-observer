@@ -17,4 +17,11 @@ export interface EventEmitter<T extends {[K: string]: (...args: any[]) => void}>
 	 * @param listener Listener to remove.
 	 */
 	removeEventListener<K extends keyof T>(key: K, listener: T[K]): void;
+
+	/**
+	 * Add a listener to specific event that will be fired only once.
+	 * @param key Event name to subscribe on.
+	 * @param listener Listener.
+	 */
+	onceEventListener<K extends keyof T>(key: K, listener: T[K]): void;
 }

@@ -27,6 +27,14 @@ export class Observer<T extends (...args: any[]) => void = () => void> implement
 			this.listeners.splice(index, 1);
 	}
 
+	public onceListener(listener: T): void {
+		const once = (...args: any[]): void => {
+			listener(...args);
+			this.removeListener(once as T);
+		}
+		this.addListener(once as T);
+	}
+
 	/**
 	 * Notify all subscribed listeners.
 	 * @param args Parameters being passed to subscribed listeners.

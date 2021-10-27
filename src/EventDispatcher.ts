@@ -34,6 +34,10 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 		this.observers[key]?.removeListener(listener);
 	}
 
+	public onceEventListener<K extends keyof T>(key: K, listener: T[K]): void {
+		this.observers[key]?.onceListener(listener);
+	}
+
 	/**
 	 * Notify listeners subscribed on specific event.
 	 * @param key Event name which listeners will be called.

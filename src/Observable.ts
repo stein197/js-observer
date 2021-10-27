@@ -15,4 +15,10 @@ export interface Observable<T extends (...args: any[]) => void> {
 	 * @param listener Listener to remove.
 	 */
 	removeListener(listener: T): void;
+
+	/**
+	 * Add a listener that will be fired only once.
+	 * @param listener Listener.
+	 */
+	onceListener(listener: T): void;
 }
