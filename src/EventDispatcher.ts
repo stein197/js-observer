@@ -35,7 +35,7 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 
 	public onceEventListener<K extends keyof T>(key: K, listener: T[K]): void {
 		this.ensureEventObserver(key);
-		this.observers[key]?.onceListener(listener);
+		this.observers[key]!.onceListener(listener);
 	}
 
 	/**
