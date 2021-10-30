@@ -1,12 +1,12 @@
 {
   "name": "@stein197/observer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Library that provides an ability to use observer pattern",
   "main": "index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "clean",
-	"precompile": "clean",
+    "precompile": "clean",
     "compile": "tsc",
     "prebundle": "npm run compile",
     "bundle": "rollup --config",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stein197/observer.git"
+    "url": "git+https://github.com/stein197/js-observer.git"
   },
   "keywords": [
     "observer",
@@ -25,14 +25,14 @@
   "author": "Nail' Gafarov <nil20122013@gmail.com> (https://gnail.dev)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stein197/observer/issues"
+    "url": "https://github.com/stein197/js-observer/issues"
   },
-  "homepage": "https://github.com/stein197/observer#readme",
+  "homepage": "https://github.com/stein197/js-observer#readme",
   "devDependencies": {
     "@types/mocha": "^9.0.0",
+    "@types/node": "^16.11.6",
     "mocha": "^9.1.2",
     "rollup": "^2.58.0",
-    "should": "^13.2.3",
     "typescript": "^4.4.3"
   }
 }
