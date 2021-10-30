@@ -25,8 +25,7 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 	private readonly observers: {[K in keyof T]?: Observer<T[K]>} = {};
 
 	public addEventListener<K extends keyof T>(key: K, listener: T[K]): void {
-		if (!this.observers[key])
-			this.observers[key] = new Observer();
+		this.ensureEventObserver(key);
 		this.observers[key]!.addListener(listener);
 	}
 
@@ -35,6 +34,7 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 	}
 
 	public onceEventListener<K extends keyof T>(key: K, listener: T[K]): void {
+		this.ensureEventObserver(key);
 		this.observers[key]?.onceListener(listener);
 	}
 
@@ -45,5 +45,10 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 	 */
 	public notify<K extends keyof T>(key: K, ...args: Parameters<T[K]>): void {
 		this.observers[key]?.notify(...args);
+	}
+
+	private ensureEventObserver<K extends keyof T>(key: K): void {
+		if (!this.observers[key])
+			this.observers[key] = new Observer();
 	}
 }

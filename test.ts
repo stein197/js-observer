@@ -153,7 +153,7 @@ mocha.describe("EventDispatcher<T>", () => {
 	});
 
 	mocha.describe("notify()", () => {
-		mocha.it.skip("Passes arguments through addEventListener()", () => {
+		mocha.it("Passes arguments through addEventListener()", () => {
 			let tmpNumber = 0;
 			let tmpString = "";
 			eventDispatcher.addEventListener("numberNstring", (n, s) => {
@@ -165,7 +165,7 @@ mocha.describe("EventDispatcher<T>", () => {
 			assert.equal(tmpString, argString);
 		});
 
-		mocha.it.skip("Passes arguments through onceEventListener()", () => {
+		mocha.it("Passes arguments through onceEventListener()", () => {
 			let tmpNumber = 0;
 			let tmpString = "";
 			eventDispatcher.onceEventListener("numberNstring", (n, s) => {
