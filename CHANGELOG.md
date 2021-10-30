@@ -5,7 +5,7 @@
 - Add an ability to return values from listeners to affect the flow of code
 - Make key for `EventDispatcher<T>` accept enum types
 
-## [1.2.0](../../compare/1.1.0..1.2.0) - XXXX-XX-XX
+## [1.2.0](../../compare/1.1.0..1.2.0) - 2021-10-30
 ### Added
 - Methods `onceListener`, `onceEventListener`
 
