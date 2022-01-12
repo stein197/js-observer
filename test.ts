@@ -75,6 +75,13 @@ mocha.describe("Observer<T>", () => {
 			observer.notify(arg);
 			tracker.verify();
 		});
+
+		mocha.it("Attached listener can be removed", () => {
+			observer.onceListener(noop);
+			observer.removeListener(noop);
+			observer.notify(arg);
+			assert.throws(() => tracker.verify());
+		});
 	});
 
 	mocha.describe("notify()", () => {
@@ -149,6 +156,13 @@ mocha.describe("EventDispatcher<T>", () => {
 			eventDispatcher.notify("numberNstring", argNumber, argString);
 			eventDispatcher.notify("numberNstring", argNumber, argString);
 			trackerNumberNString.verify();
+		});
+
+		mocha.it("Attached listener can be removed", () => {
+			eventDispatcher.onceEventListener("numberNstring", noopNumberNString);
+			eventDispatcher.removeEventListener("numberNstring", noopNumberNString);
+			eventDispatcher.notify("numberNstring", argNumber, argString);
+			assert.throws(() => trackerNumberNString.verify())
 		});
 	});
 
