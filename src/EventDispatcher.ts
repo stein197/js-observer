@@ -3,7 +3,7 @@ import {Observer} from "./Observer";
 
 /**
  * Class that is used to implement pattern `observer`. Observer is an object you can subscribe on to listen to it's
- * changes. Unlike single {@link Observer} where at notifying moment every listener is being fired, here only selected
+ * changes. Unlike single {@link Observer} where at dispatching moment every listener is being fired, here only selected
  * group of events could be called, passing them specific data.
  * @typeParam T - Map of pairs `<event name>: <listener type>`.
  * Basic usage:
@@ -15,8 +15,8 @@ import {Observer} from "./Observer";
  * const playerObserver = new EventDispatcher<PlayerEvent>();
  * playerObserver.addEventListener("AfterJoin", id => {}); // Adding listener on "AfterJoin" event
  * playerObserver.addEventListener("AfterUnjoin", (id, reason) => {}); // Adding listener on "AfterUnjoin" event
- * playerObserver.notify("AfterJoin", 12); // Firing all listeners subscribed on "AfterJoin" event
- * playerObserver.notify("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
+ * playerObserver.dispatch("AfterJoin", 12); // Firing all listeners subscribed on "AfterJoin" event
+ * playerObserver.dispatch("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
  * ```
  */
 export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> implements EventEmitter<T> {
@@ -39,12 +39,12 @@ export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> 
 	}
 
 	/**
-	 * Notify listeners subscribed on specific event.
+	 * Dispatch listeners subscribed on specific event.
 	 * @param key Event name which listeners will be called.
 	 * @param args Arguments to pass to the listeners.
 	 */
-	public notify<K extends keyof T>(key: K, ...args: Parameters<T[K]>): void {
-		this.observers[key]?.notify(...args);
+	public dispatch<K extends keyof T>(key: K, ...args: Parameters<T[K]>): void {
+		this.observers[key]?.dispatch(...args);
 	}
 
 	private ensureEventObserver<K extends keyof T>(key: K): void {

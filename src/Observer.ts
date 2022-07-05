@@ -8,7 +8,7 @@ import {Observable} from "./Observable";
  * ```ts
  * const productObserver = new Observer<(id: number, name: string) => void>();
  * productObserver.addListener((id, name) => {}); // Adding a listener
- * productObserver.notify(12, "Title"); // Notifying and passing parameters to all subscribed listeners
+ * productObserver.dispatch(12, "Title"); // Dispatching and passing parameters to all subscribed listeners
  * ```
  */
 export class Observer<T extends (...args: any[]) => void = () => void> implements Observable<T> {
@@ -36,10 +36,10 @@ export class Observer<T extends (...args: any[]) => void = () => void> implement
 	}
 
 	/**
-	 * Notify all subscribed listeners.
+	 * Dispatch all subscribed listeners.
 	 * @param args Parameters being passed to subscribed listeners.
 	 */
-	public notify(...args: Parameters<T>): void {
+	public dispatch(...args: Parameters<T>): void {
 		this.listeners.slice().forEach(callback => callback(...args));
 	}
 }
