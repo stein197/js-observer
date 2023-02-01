@@ -1,7 +1,3 @@
-/out/**/*.js
-/tsconfig.json
-/rollup.config.js
 **/*.ts
-/clean*
 !**/*.d.ts
-**/test*
+/tsconfig.json

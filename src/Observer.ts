@@ -1,4 +1,6 @@
-import {Observable} from "./Observable";
+import type {Observable} from "./Observable";
+
+export = Observer;
 
 /**
  * Class that is used to implement pattern `observer`. Observer is an object you can subscribe on to listen to it's
@@ -11,7 +13,7 @@ import {Observable} from "./Observable";
  * productObserver.dispatch(12, "Title"); // Dispatching and passing parameters to all subscribed listeners
  * ```
  */
-export class Observer<T extends (...args: any[]) => void = () => void> implements Observable<T> {
+class Observer<T extends (...args: any[]) => void = () => void> implements Observable<T> {
 
 	/** Holds all subscribed listeners */
 	private readonly listeners: T[] = [];

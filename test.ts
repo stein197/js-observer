@@ -1,6 +1,7 @@
-import mocha from "mocha";
-import assert from "assert";
-import {Observer, EventDispatcher} from ".";
+import "mocha";
+import * as assert from "assert";
+import Observer = require("./src/Observer");
+import EventDispatcher = require("./src/EventDispatcher");
 
 function getNoop(): {tracker: assert.CallTracker; noop(): void} {
 	const tracker = new assert.CallTracker();
@@ -26,25 +27,25 @@ function getNoopStringNNumber(): {tracker: assert.CallTracker; noop(s: string, n
 	};
 }
 
-mocha.describe("Observer<T>", () => {
+describe("Observer<T>", () => {
 	const arg = 12;
 	let observer: Observer<(number: number) => void>;
 	let noop: () => void;
 	let tracker: assert.CallTracker;
 
-	mocha.beforeEach(() => {
+	beforeEach(() => {
 		observer = new Observer();
 		({noop, tracker} = getNoop());
 	});
 
-	mocha.describe("addListener()", () => {
-		mocha.it("Firing registered listener", () => {
+	describe("addListener()", () => {
+		it("Firing registered listener", () => {
 			observer.addListener(noop);
 			observer.dispatch(arg);
 			tracker.verify();
 		});
 	
-		mocha.it("Adding already added listener won't lead to firing it more than once", () => {
+		it("Adding already added listener won't lead to firing it more than once", () => {
 			observer.addListener(noop);
 			observer.addListener(noop);
 			observer.dispatch(arg);
@@ -52,15 +53,15 @@ mocha.describe("Observer<T>", () => {
 		});
 	});
 
-	mocha.describe("removeListener()", () => {
-		mocha.it("Listeners won't be fired after removing", () => {
+	describe("removeListener()", () => {
+		it("Listeners won't be fired after removing", () => {
 			observer.addListener(noop);
 			observer.removeListener(noop);
 			observer.dispatch(arg);
 			assert.throws(() => tracker.verify(), assert.AssertionError);
 		});
 	
-		mocha.it("Removing a listener actually removes it from the inner array", () => {
+		it("Removing a listener actually removes it from the inner array", () => {
 			observer.addListener(noop);
 			assert.equal((observer as any).listeners.length, 1);
 			observer.removeListener(noop);
@@ -68,8 +69,8 @@ mocha.describe("Observer<T>", () => {
 		});
 	});
 
-	mocha.describe("onceListener()", () => {
-		mocha.it("Fires only once", () => {
+	describe("onceListener()", () => {
+		it("Fires only once", () => {
 			observer.onceListener(noop);
 			observer.dispatch(arg);
 			observer.dispatch(arg);
@@ -77,15 +78,15 @@ mocha.describe("Observer<T>", () => {
 		});
 	});
 
-	mocha.describe("dispatch()", () => {
-		mocha.it("Passes arguments through addListener()", () => {
+	describe("dispatch()", () => {
+		it("Passes arguments through addListener()", () => {
 			let tmp = 0;
 			observer.addListener(arg => tmp = arg);
 			observer.dispatch(arg);
 			assert.equal(tmp, arg);
 		});
 
-		mocha.it("Passes arguments through onceListener()", () => {
+		it("Passes arguments through onceListener()", () => {
 			let tmp = 0;
 			observer.onceListener(arg => tmp = arg);
 			observer.dispatch(arg);
@@ -94,7 +95,7 @@ mocha.describe("Observer<T>", () => {
 	});
 });
 
-mocha.describe("EventDispatcher<T>", () => {
+describe("EventDispatcher<T>", () => {
 	const argNumber = 12;
 	const argString = "John";
 	let eventDispatcher: EventDispatcher<{
@@ -106,20 +107,20 @@ mocha.describe("EventDispatcher<T>", () => {
 	let trackerNumberNString: assert.CallTracker;
 	let trackerStringNNumber: assert.CallTracker;
 
-	mocha.beforeEach(() => {
+	beforeEach(() => {
 		eventDispatcher = new EventDispatcher();
 		({noop: noopNumberNString, tracker: trackerNumberNString} = getNoopNumberNString());
 		({noop: noopStringNNumber, tracker: trackerStringNNumber} = getNoopStringNNumber());
 	});
 
-	mocha.describe("addEventListener()", () => {
-		mocha.it("Firing registered listener", () => {
+	describe("addEventListener()", () => {
+		it("Firing registered listener", () => {
 			eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.dispatch("numberNstring", argNumber, argString);
 			trackerNumberNString.verify();
 		});
 	
-		mocha.it("Adding already added listener won't lead to firing it more than once", () => {
+		it("Adding already added listener won't lead to firing it more than once", () => {
 			eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.dispatch("numberNstring", argNumber, argString);
@@ -127,15 +128,15 @@ mocha.describe("EventDispatcher<T>", () => {
 		});
 	});
 
-	mocha.describe("removeEventListener()", () => {
-		mocha.it("Listeners won't be fired after removing", () => {
+	describe("removeEventListener()", () => {
+		it("Listeners won't be fired after removing", () => {
 			eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.removeEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.dispatch("numberNstring", argNumber, argString);
 			assert.throws(() => trackerNumberNString.verify(), assert.AssertionError);
 		});
 	
-		mocha.it("Removing a listener actually removes it from the inner array", () => {
+		it("Removing a listener actually removes it from the inner array", () => {
 			eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 			assert.equal((eventDispatcher as any).observers.numberNstring.listeners.length, 1);
 			eventDispatcher.removeEventListener("numberNstring", noopNumberNString);
@@ -143,8 +144,8 @@ mocha.describe("EventDispatcher<T>", () => {
 		});
 	});
 
-	mocha.describe("onceEventListener()", () => {
-		mocha.it("Fires only once", () => {
+	describe("onceEventListener()", () => {
+		it("Fires only once", () => {
 			eventDispatcher.onceEventListener("numberNstring", noopNumberNString);
 			eventDispatcher.dispatch("numberNstring", argNumber, argString);
 			eventDispatcher.dispatch("numberNstring", argNumber, argString);
@@ -152,8 +153,8 @@ mocha.describe("EventDispatcher<T>", () => {
 		});
 	});
 
-	mocha.describe("dispatch()", () => {
-		mocha.it("Passes arguments through addEventListener()", () => {
+	describe("dispatch()", () => {
+		it("Passes arguments through addEventListener()", () => {
 			let tmpNumber = 0;
 			let tmpString = "";
 			eventDispatcher.addEventListener("numberNstring", (n, s) => {
@@ -165,7 +166,7 @@ mocha.describe("EventDispatcher<T>", () => {
 			assert.equal(tmpString, argString);
 		});
 
-		mocha.it("Passes arguments through onceEventListener()", () => {
+		it("Passes arguments through onceEventListener()", () => {
 			let tmpNumber = 0;
 			let tmpString = "";
 			eventDispatcher.onceEventListener("numberNstring", (n, s) => {
@@ -178,7 +179,7 @@ mocha.describe("EventDispatcher<T>", () => {
 		});
 	});
 
-	mocha.it("Firing event of one type won't fire listeners of another", () => {
+	it("Firing event of one type won't fire listeners of another", () => {
 		eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 		eventDispatcher.addEventListener("stringNnumber", noopStringNNumber);
 		eventDispatcher.dispatch("numberNstring", argNumber, argString);
@@ -189,7 +190,7 @@ mocha.describe("EventDispatcher<T>", () => {
 		trackerStringNNumber.verify();
 	});
 
-	mocha.it("Removing event of one type won't remove listeners of another", () => {
+	it("Removing event of one type won't remove listeners of another", () => {
 		eventDispatcher.addEventListener("numberNstring", noopNumberNString);
 		eventDispatcher.addEventListener("stringNnumber", noopStringNNumber);
 		eventDispatcher.removeEventListener("numberNstring", noopNumberNString);

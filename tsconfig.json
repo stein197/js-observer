@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"outDir": "out",
-		"target": "ESNext",
+		"outDir": ".",
+		"rootDir": "src",
+		"target": "ES5",
 		"strict": true,
-		"module": "ESNext",
+		"module": "CommonJS",
 		"declaration": true,
-		"declarationDir": "types",
 		"allowSyntheticDefaultImports": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
@@ -14,9 +14,7 @@
 		"resolveJsonModule": true
 	},
 	"include": [
-		"*.ts"
+		"./src/*.ts"
 	],
-	"exclude": [
-		"out"
-	]
+	"exclude": []
 }

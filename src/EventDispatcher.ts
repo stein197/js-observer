@@ -1,5 +1,7 @@
 import {EventEmitter} from "./EventEmitter";
-import {Observer} from "./Observer";
+import Observer = require("./Observer");
+
+export = EventDispatcher;
 
 /**
  * Class that is used to implement pattern `observer`. Observer is an object you can subscribe on to listen to it's
@@ -19,7 +21,7 @@ import {Observer} from "./Observer";
  * playerObserver.dispatch("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
  * ```
  */
-export class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> implements EventEmitter<T> {
+class EventDispatcher<T extends {[K: string]: (...args: any[]) => void}> implements EventEmitter<T> {
 
 	/** Holds all subscribed listeners grouped by event name */
 	private readonly observers: {[K in keyof T]?: Observer<T[K]>} = {};
