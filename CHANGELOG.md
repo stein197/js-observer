@@ -1,10 +1,14 @@
 # CHANGELOG
 
 ## [Unreleased]
-- Add an ability to pass `this` down to listeners
 - Add an ability to return values from listeners to affect the flow of code
-- Make key for `EventDispatcher<T>` accept enum types
-- Add check for removing listeners that should be fired only once
+
+## [2.0.0](../../compare/1.3.0..2.0.0) - 2022-02-07
+### Added
+- `Event` base class
+
+### Changed
+- String event names and parametric callbacks were replaced with event class
 
 ## [1.3.0](../../compare/1.2.0..1.3.0) - 2022-07-05
 ### Changed
