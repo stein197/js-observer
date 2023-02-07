@@ -5,6 +5,7 @@
   "main": "index.js",
   "types": "types/index.d.ts",
   "scripts": {
+    "clean": "del .\\*.js .\\*.d.ts .\\*.map 2>nul",
     "build": "tsc",
     "test": "ts-mocha test.ts"
   },
