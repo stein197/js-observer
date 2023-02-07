@@ -1,27 +1,30 @@
+import type {Constructor} from "./Constructor";
+import type Event = require("./Event");
+
 /**
  * Interface that every class must implement if it emits events.
- * @typeParam T - `<event name>: <event listener signature>` map that describes which events the class could emit.
+ * @typeParam T - List of events to produce.
  */
-export interface EventEmitter<T extends {[K: string]: (...args: any[]) => void}> {
+export interface EventEmitter<T extends Event[]> {
 
 	/**
 	 * Add a listener to specific event.
-	 * @param key Event name to subscribe on.
+	 * @param type Event type to subscribe on.
 	 * @param listener Listener.
 	 */
-	addEventListener<K extends keyof T>(key: K, listener: T[K]): void;
+	addEventListener<E extends T[number]>(type: Constructor<E>, listener: (event: E) => void): void;
 
 	/**
 	 * Remove previously subscribed listener from specific event.
-	 * @param key Event name to cancel subscribe.
+	 * @param type Event type to cancel subscribe.
 	 * @param listener Listener to remove.
 	 */
-	removeEventListener<K extends keyof T>(key: K, listener: T[K]): void;
+	removeEventListener<E extends T[number]>(type: Constructor<E>, listener: (event: E) => void): void;
 
 	/**
 	 * Add a listener to specific event that will be fired only once.
-	 * @param key Event name to subscribe on.
+	 * @param type Event type to subscribe on.
 	 * @param listener Listener.
 	 */
-	onceEventListener<K extends keyof T>(key: K, listener: T[K]): void;
+	onceEventListener<E extends T[number]>(type: Constructor<E>, listener: (event: E) => void): void;
 }

@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"outDir": ".",
 		"rootDir": "src",
-		"target": "ES5",
+		"target": "ESNext",
 		"strict": true,
 		"module": "CommonJS",
 		"declaration": true,
@@ -11,6 +11,8 @@
 		"noUnusedParameters": true,
 		"allowUnusedLabels": false,
 		"moduleResolution": "node",
+		"sourceMap": true,
+		"inlineSources": true,
 		"resolveJsonModule": true
 	},
 	"include": [

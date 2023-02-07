@@ -1,5 +1,5 @@
 # Observer pattern implementation for TypeScript
-This tiny package implements the `observer` pattern in two different classes - `Observer` and `EventDispatcher`.
+This tiny package implements the `observer` pattern.
 
 ## Installation
 Run:
@@ -8,46 +8,28 @@ npm i @stein197/observer
 ```
 
 ## Usage
-`Observer` class:
 ```ts
-const productObserver = new Observer<(id: number, name: string) => void>();
-productObserver.addListener((id, name) => {/* ... */}); // Adding a listener
-productObserver.onceListener((id, name) => {/* ... */}); // Will be fired only once
-productObserver.dispatch(12, "Title"); // Dispatching and passing parameters to all subscribed listeners
-productObserver.dispatch(12, "Title", "Unused parameter"); // Compile-time error
+import Event from "@stein197/observer/Event";
+class JoinEvent extends Event {}
+class LeaveEvent extends Event {}
+const dispatcher = new EventDispatcher<[JoinEvent, LeaveEvent]>();
+dispatcher.addEventListener(JoinEvent, event => {}); // Adding listener on JoinEvent event
+dispatcher.addEventListener(LeaveEvent, event => {}); // Adding listener on LeaveEvent event
+dispatcher.dispatch(JoinEvent, new JoinEvent()); // Firing all listeners subscribed on "AfterJoin" event
+dispatcher.dispatch(LeaveEvent, new LeaveEvent()); // Firing all listeners subscribed on "AfterUnjoin" event
 ```
 
-`EventDispatcher` class:
+Every class that emits event must implement `EventEmitter` interface:
 ```ts
-type PlayerEvent = {
-	AfterJoin(id: number): void;
-	AfterUnjoin(id: number, reason: string): void;
-}
-const playerObserver = new EventDispatcher<PlayerEvent>();
-playerObserver.addEventListener("AfterJoin", id => {/* ... */}); // Adding listener on "AfterJoin" event
-playerObserver.addEventListener("AfterUnjoin", (id, reason) => {/* ... */}); // Adding listener on "AfterUnjoin" event
-playerObserver.onceEventListener("AfterUnjoin", (id, reason) => {/* ... */}); // Will be fired only once
-playerObserver.dispatch("AfterJoin", 12); // Firing all listeners subscribed on "AfterJoin" event
-playerObserver.dispatch("AfterUnjoin", 12, "John"); // Firing all listeners subscribed on "AfterUnjoin" event
-playerObserver.dispatch("AfterUnjoin", 12); // Compile-time error
-```
+import type {EventEmitter} from "@stein197/observer/EventEmitter";
 
-Every class that emits event must implement `Observable` either `EventEmitter` interfaces for single or multiple events respectively:
-```ts
-import {Observable, EventEmitter} from "@stein197/observer";
-
-class User implements EventEmitter<{AfterLeave(reason: string): void}> {
+class User implements EventEmitter<[]> {
 	public addEventListener(/* ... */) {/* ... */}
 	public removeEventListener(/* ... */) {/* ... */}
-}
-
-class Value implements Observable<(value: string) => void> {
-	public addListener(listener: (value: string) => void) {/* ... */}
-	public removeListener(listener: (value: string) => void) {/* ... */}
 }
 ```
 
 ## NPM scripts
-- `compile` compiles source code
-- `bundle` bundles compiled code into a single file
+- `clean` cleans working directory
+- `build` compiles source code
 - `test` runs unit tests
