@@ -3,6 +3,10 @@
 ## [Unreleased]
 - Add an ability to return values from listeners to affect the flow of code
 
+## [X.X.X](../../compare/2.0.0..X.X.X) - XXXX-XX-Xx
+### Changed
+- `EventDispatcher.dispatch()` now accepts only one argument
+
 ## [2.0.0](../../compare/1.3.0..2.0.0) - 2022-02-07
 ### Added
 - `Event` base class

@@ -10,13 +10,15 @@ npm i @stein197/observer
 ## Usage
 ```ts
 import Event from "@stein197/observer/Event";
+
 class JoinEvent extends Event {}
 class LeaveEvent extends Event {}
+
 const dispatcher = new EventDispatcher<[JoinEvent, LeaveEvent]>();
-dispatcher.addEventListener(JoinEvent, event => {}); // Adding listener on JoinEvent event
+dispatcher.addEventListener(JoinEvent, event => {});  // Adding listener on JoinEvent event
 dispatcher.addEventListener(LeaveEvent, event => {}); // Adding listener on LeaveEvent event
-dispatcher.dispatch(JoinEvent, new JoinEvent()); // Firing all listeners subscribed on "AfterJoin" event
-dispatcher.dispatch(LeaveEvent, new LeaveEvent()); // Firing all listeners subscribed on "AfterUnjoin" event
+dispatcher.dispatch(new JoinEvent());                 // Firing all listeners subscribed on JoinEvent event
+dispatcher.dispatch(new LeaveEvent());                // Firing all listeners subscribed on LeaveEvent event
 ```
 
 Every class that emits event must implement `EventEmitter` interface:

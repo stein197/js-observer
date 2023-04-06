@@ -55,11 +55,12 @@ class EventDispatcher<T extends Event[]> implements EventEmitter<T> {
 	}
 
 	/**
-	 * Dispatch listeners subscribed on specific event.
+	 * Dispatch listeners subscribed on specific event. Event type is automatically inferred from the instance.
 	 * @param type Event type which listeners will be called.
 	 * @param event Event object to pass to the listeners.
 	 */
-	public dispatch<E extends T[number]>(type: Constructor<E>, event: E): void {
+	public dispatch<E extends T[number]>(event: E): void {
+		const type = event.constructor as Constructor<Event>;
 		this.observers.get(type)?.forEach(listener => listener(event));
 	}
 

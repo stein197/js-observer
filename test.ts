@@ -52,14 +52,14 @@ describe("EventDispatcher<T>", () => {
 	describe("addEventListener()", () => {
 		it("Firing registered listener", () => {
 			dispatcher.addEventListener(NumberNStringEvent, noopNumberNString);
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			trackerNumberNString.verify();
 		});
 	
 		it("Adding already added listener won't lead to firing it more than once", () => {
 			dispatcher.addEventListener(NumberNStringEvent, noopNumberNString);
 			dispatcher.addEventListener(NumberNStringEvent, noopNumberNString);
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			trackerNumberNString.verify();
 		});
 	});
@@ -68,7 +68,7 @@ describe("EventDispatcher<T>", () => {
 		it("Listeners won't be fired after removing", () => {
 			dispatcher.addEventListener(NumberNStringEvent, noopNumberNString);
 			dispatcher.removeEventListener(NumberNStringEvent, noopNumberNString);
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			assert.throws(() => trackerNumberNString.verify(), assert.AssertionError);
 		});
 	});
@@ -76,8 +76,8 @@ describe("EventDispatcher<T>", () => {
 	describe("onceEventListener()", () => {
 		it("Fires only once", () => {
 			dispatcher.onceEventListener(NumberNStringEvent, noopNumberNString);
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			trackerNumberNString.verify();
 		});
 	});
@@ -90,7 +90,7 @@ describe("EventDispatcher<T>", () => {
 				tmpNumber = event.n;
 				tmpString = event.s;
 			});
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			assert.equal(tmpNumber, argNumber);
 			assert.equal(tmpString, argString);
 		});
@@ -102,7 +102,7 @@ describe("EventDispatcher<T>", () => {
 				tmpNumber = event.n;
 				tmpString = event.s;
 			});
-			dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+			dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 			assert.equal(tmpNumber, argNumber);
 			assert.equal(tmpString, argString);
 		});
@@ -111,10 +111,10 @@ describe("EventDispatcher<T>", () => {
 	it("Firing event of one type won't fire listeners of another", () => {
 		dispatcher.addEventListener(NumberNStringEvent, noopNumberNString);
 		dispatcher.addEventListener(StringNNumberEvent, noopStringNNumber);
-		dispatcher.dispatch(NumberNStringEvent, new NumberNStringEvent(argNumber, argString));
+		dispatcher.dispatch(new NumberNStringEvent(argNumber, argString));
 		trackerNumberNString.verify();
-		assert.throws(() => trackerStringNNumber.verify(), assert.AssertionError)
-		dispatcher.dispatch(StringNNumberEvent, new StringNNumberEvent(argString, argNumber));
+		assert.throws(() => trackerStringNNumber.verify(), assert.AssertionError);
+		dispatcher.dispatch(new StringNNumberEvent(argString, argNumber));
 		trackerNumberNString.verify();
 		trackerStringNNumber.verify();
 	});
